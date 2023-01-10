@@ -83,7 +83,7 @@ class Weather():
         self.version_info = "error check, time zone mismatch"
         self.data_path_0 = "/location/to/alabama_data/"
         self.wrf_data_path_0 = "/location/to/WRF_Data/"
-        self.kentucky_data_path_0 = "/location/to/Kentucky_Data/"
+        self.kentucky_data_path_0 = "/home/kalebg/Documents/GitHub/temperatureLSTM/Meto-Modelet-Suite/data/KentukyData/"
         self.seq = 5
 
         self.test_feature_list = ['TAIR']

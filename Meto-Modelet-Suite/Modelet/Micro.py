@@ -85,18 +85,20 @@ if len(sys.argv) > 1 and len(sys.argv) < 3:
     exit(0)
 
 # python kentucky_micro BMBL 3
-if len(sys.argv) == 3:
-    station = sys.argv[1]
-    paramID = sys.argv[2]
-    paramID = int(paramID)
+station = "BMTN"
+paramID = 2
+# if len(sys.argv) == 3:
+#     station = sys.argv[1]
+#     paramID = sys.argv[2]
+#     paramID = int(paramID)
 
-if station not in stationList:
-    print("Invalid station Name, please check the list")
-    exit(1)
+# if station not in stationList:
+#     print("Invalid station Name, please check the list")
+#     exit(1)
 
-if paramID > 4 or paramID < 1:
-    print("invalid paramID")
-    exit(1)
+# if paramID > 4 or paramID < 1:
+#     print("invalid paramID")
+#     exit(1)
 
 m.station = station
 
@@ -155,6 +157,8 @@ global_path = "cache/"+m.station+"_Micro"+m.test_feature_list[0]+"_all"
 
 train_x, train_y = m.read_kentucky_file(year=year, year_during=year_during, start_date=start_date, during=during, shift=5,
                                     seq=seq)
+
+
 
 train_x = m.sanitize(np.array(train_x))
 train_y = m.sanitize(np.array(train_y))
