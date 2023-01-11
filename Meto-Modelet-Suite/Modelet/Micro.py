@@ -157,7 +157,7 @@ global_path = "cache/"+m.station+"_Micro"+m.test_feature_list[0]+"_all"
 
 train_x, train_y = m.read_kentucky_file(year=year, year_during=year_during, start_date=start_date, during=during, shift=5,
                                     seq=seq)
-
+print("\n\ntrain_x: \n", train_x, "\n\ntrain_y: \n", train_y)
 
 
 train_x = m.sanitize(np.array(train_x))
@@ -181,7 +181,7 @@ encoder_input_data, decoder_input_data, decoder_target_data = m.pre_seq(x_train,
 
 test_x, test_y = m.read_kentucky_file(year=T_year, year_during=T_year_during, start_date=T_start_date, during=T_during,
                                   shift=5, seq=seq)
-
+print("\n\ntest_x: \n", test_x, "\n\ntest_y: \n", test_y)
 test_x.to_csv('test_x.csv')
 
 test_x = m.sanitize(np.array(test_x))

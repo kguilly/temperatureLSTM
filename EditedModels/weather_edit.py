@@ -363,11 +363,11 @@ class Weather():
         # name_list = ['year', 'co2', 'Median_Anomaly', 'Lower_bount']
         # train_x_all = pd.DataFrame(columns=['co2', 'Median_Anomaly', 'Lower_Bound', 'UpperBound'])
 
-        print(year_during)
+        
         # load all the values from both files into df, combine into one single df, 
         # return them before doing anything to make sure everything looks okie
         self.data_path = self.co2_path
-        train_y = pd.DataFrame(columns=['TempAnomaly('+metric+')'])
+        train_y = pd.DataFrame(columns=self.test_feature_list)
         train_x = pd.DataFrame(columns=name_list)
 
         tempdf = pd.read_csv(self.co2_path + "global_temperature_anomaly.csv")
@@ -378,7 +378,17 @@ class Weather():
         full_train_x = pd.merge(tempdf, co2df, how='right', on=['Year'])
         full_train_x.drop(['country'], axis=1, inplace=True)
         
-
+        # in both train x and y, only include the years that are passed,
+        # starting at year, and including every year while year_during
+        years_to_include = []
+    
+        for i in range(0,year_during):
+            years_to_include.append(int(year)+i)
+        # if the years in full_train_x are not included in years_to_include, then drop
+        full_train_x = full_train_x[full_train_x['Year'] >=years_to_include[0]]
+        full_train_x = full_train_x[full_train_x['Year'] <= years_to_include[year_during-1]]
+        # print("\n\nfull_train_x\n", full_train_x)
+        # remove 
         # full_train_x.fillna(method='ffill', inplace=True)
         # print(full_train_x.shape)
         full_train_x.interpolate(method='linear', limit_direction='forward', inplace=True)

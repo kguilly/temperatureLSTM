@@ -62,7 +62,7 @@ train = True
 ###############################################
 # Training date range
 during = 1  # How many days of data in each year
-year_during = 159  # How many years of data
+year_during = 141  # How many years of data
 # start_date = "0715"  # Start date of each year
 year = "1850" # kaleb: start year? 
 seq = 1 # how much the data gets compressed by 
@@ -70,13 +70,13 @@ m.seq = seq
 
 # Test date range
 T_during = 1
-T_year_during = 10 # train for 10 years of data
+T_year_during = 28 # train for x years of data
 # T_start_date = "0820"
-T_year = "2009"
+T_year = "1991"
 
 mapper_epochs = 100
 model_epochs = 60
-decoderLen = 12 # for60 minutes prediction
+decoderLen = 8 # = to the number of time horizons for prediction
 ##############################################
 
 print(len(sys.argv))
@@ -101,7 +101,7 @@ elif param == 'max':
     metric = 'Upper_bound_(95%_CI)'
 else:
     metric = 'Median_anomaly'
-global_path = "cache/Micro"+param
+global_path = "cache/Micro_"+metric
 m.test_feature_list = []
 m.test_feature_list.append(metric)
 m.feature_list_full = ['Year', 'Median_anomaly', 'Upper_bound_(95%_CI)', 'Lower_bound_(95%_CI)', 'co2']
@@ -109,7 +109,7 @@ m.feature_list_full_value = ['Median_anomaly', 'Upper_bound_(95%_CI)', 'Lower_bo
 # read_kentucky_file defined on line 354
 train_x, train_y = m.read_co2_file(year=year, year_during=year_during, during=during, shift=5,
                                     seq=seq, metric=metric)
-
+print("\n\ntrain_x: \n", train_x, "\n\ntrain_y: \n", train_y)
 
 train_x = m.sanitize(np.array(train_x))
 train_y = m.sanitize(np.array(train_y))
@@ -132,6 +132,7 @@ encoder_input_data, decoder_input_data, decoder_target_data = m.pre_seq(x_train,
 
 test_x, test_y = m.read_co2_file(year=T_year, year_during=T_year_during, during=T_during,
                                   shift=5, seq=seq, metric=metric)
+print("\n\ntest_x: \n", test_x, "\n\ntest_y: \n", test_y)
 
 test_x.to_csv('test_x.csv')
 
